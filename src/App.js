@@ -1,14 +1,17 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './pages/Home/index';
+import Home from './pages/Home';
+import { Container } from '@mui/material';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" exact element={<Home />} />
-      </Routes>
-    </Router>
+    <Container>
+      <Router>
+        <Routes>
+          <Route path="/" exact element={<Home />} />
+        </Routes>
+      </Router>
+    </Container>
   );
 }
 

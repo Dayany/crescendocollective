@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import axiosAPI from '../../lib/axios/API';
+import axiosAPI from '../lib/API';
+import Recipes from '../components/Recipes/ListRecipes';
 
 function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -24,21 +25,9 @@ function Home() {
       });
   }, []);
   return (
-    <div>
-      <h1>Home</h1>
-      {recipes.map((recipe) => (
-        <div key={recipe.uuid}>
-          <h2>{recipe.title}</h2>
-          <p>{recipe.description}</p>
-        </div>
-      ))}
-      {specials.map((special) => (
-        <div key={special.uuid}>
-          <h2>{special.title}</h2>
-          <p>{special.description}</p>
-        </div>
-      ))}
-    </div>
+    <>
+      <Recipes recipes={recipes} />
+    </>
   );
 }
 
