@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid, Button, Box, Alert } from '@mui/material';
+import CardRecipe from './CardRecipe';
 
 function ListRecipes({ recipes }) {
   return (
@@ -18,31 +19,7 @@ function ListRecipes({ recipes }) {
         {recipes?.length === 0 ? (
           <Alert severity="info">The recipes are loading!</Alert>
         ) : (
-          recipes.map((recipe, index) => (
-            <></>
-            // <Row key={`recipe-row-${index}`}>
-            //   <Col key={`recipe-col-1-${index}`} xs="10"></Col>
-            //   <Col key={`recipe-col-2-${index}`}>
-            //     <Link
-            //       key={`link-${recipe.uuid}`}
-            //       to={{
-            //         pathname: `/editRecipe`,
-            //         state: {
-            //           recipe,
-            //         },
-            //       }}
-            //     >
-            //       <Button
-            //         key={`button-${recipe.uuid}`}
-            //         style={{ marginTop: '20%', marginBottom: '20%' }}
-            //         variant="info"
-            //       >
-            //         Edit
-            //       </Button>
-            //     </Link>
-            //   </Col>
-            // </Row>
-          ))
+          recipes.map((recipe, index) => <CardRecipe key={index} recipe={recipe} />)
         )}
       </Grid>
     </Grid>
