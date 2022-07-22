@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { Alert, Grid } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import axiosAPI from '../../lib/axios/API';
+import RecipeContent from './RecipeContent';
 
 function ViewRecipeDetail() {
   const { recipeId } = useParams();
   const [recipe, setRecipe] = useState(null);
-  const imgUrl = recipe?.images ? `http://localhost:3001/${recipe.images.medium}` : null;
 
   useEffect(() => {
     axiosAPI
@@ -22,14 +22,7 @@ function ViewRecipeDetail() {
   return (
     <Grid container spacing={3}>
       {recipe ? (
-        <>
-          <Grid item xs={12}>
-            <h1>{recipe.title}</h1>
-          </Grid>
-          <Grid item xs={6}>
-            <img src={imgUrl} alt={recipe.title} />
-          </Grid>
-        </>
+        <RecipeContent recipe={recipe} />
       ) : (
         <Grid item xs={12}>
           <Alert severity="error">Error loading your recipe</Alert>
