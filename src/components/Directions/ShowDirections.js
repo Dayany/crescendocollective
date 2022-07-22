@@ -6,7 +6,7 @@ function ShowDirections({ directions }) {
       <h2>Directions</h2>
       {directions &&
         directions.map((direction, index) => (
-          <CardDirections key={direction.uuid} direction={direction} index={index} />
+          <CardDirections key={`card-directions-${index}`} direction={direction} index={index} />
         ))}
     </>
   );
