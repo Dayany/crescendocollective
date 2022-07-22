@@ -23,11 +23,7 @@ function RecipeContent({ recipe }) {
         <ShowIngredient ingredients={recipe.ingredients} />
       </Grid>
       <Grid item xs={6}>
-        <h2>Directions</h2>
-        {recipe.directions &&
-          recipe.directions.map((direction, index) => (
-            <ShowDirections key={direction.uuid} direction={direction} index={index} />
-          ))}
+        <ShowDirections directions={recipe.directions} />
       </Grid>
     </>
   );

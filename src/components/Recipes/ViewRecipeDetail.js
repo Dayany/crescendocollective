@@ -12,7 +12,7 @@ function ViewRecipeDetail() {
     axiosAPI
       .get(`/recipes/${recipeId}`)
       .then((res) => {
-        setRecipe(res.data);
+        setRecipe(res.data || []);
       })
       .catch((err) => {
         console.log(err);
