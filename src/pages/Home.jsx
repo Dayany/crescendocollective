@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import axiosAPI from '../lib/axios/API';
-import Recipes from '../components/Recipes/ListRecipes';
+import ListRecipes from '../components/Recipes/ListRecipes';
 
 function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -26,7 +26,7 @@ function Home() {
   }, []);
   return (
     <>
-      <Recipes recipes={recipes} />
+      <ListRecipes recipes={recipes} />
     </>
   );
 }
