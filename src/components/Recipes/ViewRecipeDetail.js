@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Alert, Grid } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import axiosAPI from '../../lib/API';
+import axiosAPI from '../../lib/axios/API';
 
 function ViewRecipeDetail() {
   const { recipeId } = useParams();

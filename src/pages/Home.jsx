@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import axiosAPI from '../lib/API';
+import axiosAPI from '../lib/axios/API';
 import Recipes from '../components/Recipes/ListRecipes';
 
 function Home() {
