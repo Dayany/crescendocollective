@@ -10,7 +10,7 @@ function Home() {
     axiosAPI
       .get('/recipes')
       .then((res) => {
-        setRecipes(res.data);
+        setRecipes(res.data || []);
       })
       .catch((err) => {
         console.log(err);
@@ -18,7 +18,7 @@ function Home() {
     axiosAPI
       .get('/specials')
       .then((res) => {
-        setSpecials(res.data);
+        setSpecials(res.data || []);
       })
       .catch((err) => {
         console.log(err);
