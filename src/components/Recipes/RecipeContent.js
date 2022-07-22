@@ -20,11 +20,7 @@ function RecipeContent({ recipe }) {
         <h2>Cook Time: {recipe.cookTime}</h2>
       </Grid>
       <Grid item xs={6}>
-        <h2>Ingredients</h2>
-        {recipe.ingredients &&
-          recipe.ingredients.map((ingredient, index) => (
-            <ShowIngredient key={ingredient.uuid} ingredient={ingredient} index={index} />
-          ))}
+        <ShowIngredient ingredients={recipe.ingredients} />
       </Grid>
       <Grid item xs={6}>
         <h2>Directions</h2>
