@@ -2,6 +2,7 @@ import { Button, FormControl, Grid, TextField } from '@mui/material';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import AddDirections from '../Directions/AddDirections';
+import AddIngredient from '../Ingredients/AddIngredient';
 
 function AddRecipe({ recipe }) {
   const today = new Date();
@@ -10,6 +11,8 @@ function AddRecipe({ recipe }) {
   }${today.toLocaleDateString()} ${today.toLocaleTimeString()}`;
 
   const uuid = recipe ? recipe.uuid : uuidv4();
+  const postDate = recipe ? recipe.postDate : now;
+  const editDate = recipe ? now : null;
 
   const [title, setTitle] = useState(recipe ? recipe.title : '');
   const [description, setDescription] = useState(recipe ? recipe.description : '');
@@ -17,26 +20,27 @@ function AddRecipe({ recipe }) {
   const [ingredients, setIngredients] = useState(recipe ? recipe.ingredients : []);
   const [prepTime, setPrepTime] = useState(recipe ? recipe.prepTime : '');
   const [cookTime, setCookTime] = useState(recipe ? recipe.cookTime : '');
-  const postDate = useState(recipe ? recipe.postDate : now);
-  const editDate = useState(recipe ? now : '');
   const [directions, setDirections] = useState(recipe ? recipe.directions : []);
 
   const addDirection = () => {
     setDirections((currentDirections) => [
       ...currentDirections,
-      { uuid: uuidv4(), instructions: '', optional: false },
+      { instructions: '', optional: false },
     ]);
   };
-  const removeDirection = (directionId) => {
-    if (!directionId) return;
+  const removeDirection = (removeIndex) => {
+    if (removeIndex === null) return;
+
     setDirections((currentDirections) =>
-      currentDirections.filter((direction) => direction.uuid !== directionId)
+      currentDirections.filter((currentDirection, index) => {
+        return index !== removeIndex;
+      })
     );
   };
-  const editDirection = (direction) => {
+  const editDirection = (direction, editIndex) => {
     setDirections((currentDirections) =>
-      currentDirections.map((curr) =>
-        curr.uuid === direction.uuid
+      currentDirections.map((curr, index) =>
+        index === editIndex
           ? {
               ...direction,
             }
@@ -45,9 +49,33 @@ function AddRecipe({ recipe }) {
     );
   };
 
+  const addIngredient = () => {
+    setIngredients((currentIngredients) => [
+      ...currentIngredients,
+      { uuid: uuidv4(), amount: 0, measurement: '', name: '' },
+    ]);
+  };
+  const removeIngredient = (ingredientId) => {
+    if (!ingredientId) return;
+    setIngredients((currentIngredients) =>
+      currentIngredients.filter((ingredient) => ingredient.uuid !== ingredientId)
+    );
+  };
+  const editIngredient = (ingredient) => {
+    setIngredients((currentIngredients) =>
+      currentIngredients.map((curr) =>
+        curr.uuid === ingredient.uuid
+          ? {
+              ...ingredient,
+            }
+          : curr
+      )
+    );
+  };
+
   return (
     <>
-      <h1>Add Recipe</h1>
+      <h1>{recipe ? 'Edit' : 'Add'} Recipe</h1>
       <Grid container spacing={3}>
         <FormControl>
           <Grid item xs={12}>
@@ -88,7 +116,7 @@ function AddRecipe({ recipe }) {
             />
             {directions.map((direction, index) => (
               <AddDirections
-                key={direction.uuid}
+                key={`direction-${index}`}
                 index={index}
                 direction={direction}
                 editDirection={editDirection}
@@ -96,9 +124,25 @@ function AddRecipe({ recipe }) {
               />
             ))}
           </Grid>
-          <Grid m={2} item xs={6}>
+          <Grid m={2} item xs={12}>
             <Button variant="contained" color="primary" onClick={addDirection}>
               Add Direction
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            {ingredients.map((ingredient, index) => (
+              <AddIngredient
+                key={ingredient.uuid}
+                ingredient={ingredient}
+                index={index}
+                editIngredient={editIngredient}
+                removeIngredient={removeIngredient}
+              />
+            ))}
+          </Grid>
+          <Grid m={2} item xs={12}>
+            <Button variant="contained" color="primary" onClick={addIngredient}>
+              Add Ingredient
             </Button>
           </Grid>
         </FormControl>

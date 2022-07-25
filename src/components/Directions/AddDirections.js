@@ -10,7 +10,7 @@ function AddDirections({ direction, removeDirection, index, editDirection }) {
           name="instructions"
           label="Instructions"
           value={direction.instructions}
-          onChange={(e) => editDirection({ ...direction, instructions: e.target.value })}
+          onChange={(e) => editDirection({ ...direction, instructions: e.target.value }, index)}
         />
         <FormControlLabel
           control={
@@ -18,12 +18,12 @@ function AddDirections({ direction, removeDirection, index, editDirection }) {
               id="optional"
               name="optional"
               value={direction.optional}
-              onChange={(e) => editDirection({ ...direction, optional: e.target.checked })}
+              onChange={(e) => editDirection({ ...direction, optional: e.target.checked }, index)}
             />
           }
           label="Optional"
         />
-        <Button color="error" onClick={() => removeDirection(direction?.uuid)}>
+        <Button color="error" onClick={() => removeDirection(index)}>
           Remove
         </Button>
       </Grid>
