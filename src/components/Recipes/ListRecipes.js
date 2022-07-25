@@ -10,7 +10,7 @@ function ListRecipes({ recipes }) {
       </Grid>
       <Grid item xs={4}>
         <Box m={2}>
-          <Button variant="contained" color="primary" margin="dense">
+          <Button href="/addRecipe" variant="contained" color="primary" margin="dense">
             Add Recipe
           </Button>
         </Box>
