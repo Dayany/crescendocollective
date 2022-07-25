@@ -1,4 +1,4 @@
-import { Button, Checkbox, FormControlLabel, Grid, TextField } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 
 function AddIngredient({ ingredient, index, removeIngredient, editIngredient }) {
   return (

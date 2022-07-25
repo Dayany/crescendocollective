@@ -1,6 +1,8 @@
 import { Button, FormControl, Grid, TextField } from '@mui/material';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
+import axiosAPI from '../../lib/axios/API';
 import AddDirections from '../Directions/AddDirections';
 import AddIngredient from '../Ingredients/AddIngredient';
 
@@ -10,10 +12,11 @@ function AddRecipe({ recipe }) {
     today.getMonth() + 1 < 10 ? '0' : ''
   }${today.toLocaleDateString()} ${today.toLocaleTimeString()}`;
 
-  const uuid = recipe ? recipe.uuid : uuidv4();
-  const postDate = recipe ? recipe.postDate : now;
-  const editDate = recipe ? now : null;
+  const { id } = useParams();
 
+  const uuid = id ? id : uuidv4();
+  const editDate = id ? now : '';
+  const [postDate, setPostDate] = useState('');
   const [title, setTitle] = useState(recipe ? recipe.title : '');
   const [description, setDescription] = useState(recipe ? recipe.description : '');
   const [servings, setServings] = useState(recipe ? recipe.servings : '');
@@ -21,6 +24,25 @@ function AddRecipe({ recipe }) {
   const [prepTime, setPrepTime] = useState(recipe ? recipe.prepTime : '');
   const [cookTime, setCookTime] = useState(recipe ? recipe.cookTime : '');
   const [directions, setDirections] = useState(recipe ? recipe.directions : []);
+
+  useEffect(() => {
+    if (!id) return;
+    axiosAPI
+      .get(`/recipes/${id}`)
+      .then((res) => {
+        setPostDate(res.data.postDate);
+        setTitle(res.data.title);
+        setDescription(res.data.description);
+        setServings(res.data.servings);
+        setIngredients(res.data.ingredients);
+        setPrepTime(res.data.prepTime);
+        setCookTime(res.data.cookTime);
+        setDirections(res.data.directions);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [id]);
 
   const addDirection = () => {
     setDirections((currentDirections) => [
@@ -72,10 +94,48 @@ function AddRecipe({ recipe }) {
       )
     );
   };
-
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const newRecipe = {
+      uuid,
+      postDate,
+      title,
+      description,
+      servings,
+      ingredients,
+      prepTime,
+      cookTime,
+      directions,
+    };
+    if (id) {
+      axiosAPI
+        .patch(`/recipes/${id}`, newRecipe)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .then(() => {
+          window.location.href = '/';
+        });
+    } else {
+      axiosAPI
+        .post('/recipes', newRecipe)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .then(() => {
+          window.location.href = '/';
+        });
+    }
+  };
   return (
     <>
-      <h1>{recipe ? 'Edit' : 'Add'} Recipe</h1>
+      <h1>{recipe ? 'Edit' : 'Add'} Recipe</h1> <br />
       <Grid container spacing={3}>
         <FormControl>
           <Grid item xs={12}>
@@ -143,6 +203,12 @@ function AddRecipe({ recipe }) {
           <Grid m={2} item xs={12}>
             <Button variant="contained" color="primary" onClick={addIngredient}>
               Add Ingredient
+            </Button>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Button variant="contained" color="primary" onClick={handleFormSubmit}>
+              {id ? 'Save' : 'Add'} Recipe
             </Button>
           </Grid>
         </FormControl>

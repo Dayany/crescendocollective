@@ -12,7 +12,10 @@ function App() {
         <Routes>
           <Route path="/" exact element={<Home />} />
           <Route path="/viewRecipe/:recipeId" element={<ViewRecipeDetail />} />
-          <Route path="/addRecipe" element={<AddRecipe />} />
+          <Route path="/addRecipe" element={<AddRecipe />}>
+            <Route path=":id" element={<AddRecipe />} />
+          </Route>
+          <Route path="*" element={<div>Page not found</div>} />
         </Routes>
       </Router>
     </Container>
