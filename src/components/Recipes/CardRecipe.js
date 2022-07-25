@@ -23,6 +23,15 @@ function CardRecipe({ recipe }) {
           >
             View Details
           </Button>
+          <Button
+            component={Link}
+            to={{
+              pathname: `/addRecipe/${recipe.uuid}`,
+            }}
+            size="small"
+          >
+            Edit Recipe
+          </Button>
         </CardActions>
       </Box>
       <CardMedia
