@@ -7,7 +7,7 @@ function CardSpecial({ special }) {
         <Typography variant="h5" component="div">
           {special.title}
         </Typography>
-        <Typography variant="body2">{special.tyoe}</Typography>
+        <Typography variant="body2">{special.type}</Typography>
         <Typography variant="body2">{special.text}</Typography>
       </CardContent>
     </Card>
