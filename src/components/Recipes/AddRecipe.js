@@ -106,6 +106,7 @@ function AddRecipe({ recipe }) {
       prepTime,
       cookTime,
       directions,
+      editDate,
     };
     if (id) {
       axiosAPI

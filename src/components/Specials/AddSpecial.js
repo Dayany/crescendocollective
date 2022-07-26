@@ -10,7 +10,6 @@ function AddSpecial() {
   const [ingredientId, setIngredientId] = useState('');
   const [type, setType] = useState('');
   const [title, setTitle] = useState('');
-  const ingredientsList = [];
   const [filteredIngredientsList, setFilteredIngredientsList] = useState([]);
 
   useEffect(() => {
@@ -34,6 +33,7 @@ function AddSpecial() {
   }, [id]);
 
   useMemo(() => {
+    const ingredientsList = [];
     recipes.map((recipe) =>
       recipe.ingredients.map((ingredient) => ingredientsList.push(ingredient))
     );
