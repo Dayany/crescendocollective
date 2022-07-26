@@ -1,4 +1,4 @@
-import { Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Button, Grid, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { useMemo } from 'react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -45,6 +45,40 @@ function AddSpecial() {
     );
   }, [recipes]);
 
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      ingredientId,
+      type,
+      title,
+    };
+    if (id) {
+      axiosAPI
+        .put(`/specials/${id}`, data)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .then(() => {
+          window.location.href = '/';
+        });
+    } else {
+      axiosAPI
+        .post('/specials', data)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .then(() => {
+          window.location.href = '/';
+        });
+    }
+  };
+
   return (
     <Grid container spacing={3}>
       <h1>Add Specials</h1>
@@ -77,6 +111,11 @@ function AddSpecial() {
             </MenuItem>
           ))}
         </Select>
+      </Grid>
+      <Grid item xs={12}>
+        <Button variant="contained" color="primary" onClick={(e) => handleFormSubmit(e)}>
+          Submit
+        </Button>
       </Grid>
     </Grid>
   );
