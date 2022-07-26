@@ -8,7 +8,7 @@ function ListSpecials({ specials }) {
       {specials?.length === 0 ? (
         <Alert severity="info">The specials are loading!</Alert>
       ) : (
-        specials.map((special) => <CardSpecial special={special} />)
+        specials.map((special) => <CardSpecial key={special.uuid} special={special} />)
       )}
     </Grid>
   );
