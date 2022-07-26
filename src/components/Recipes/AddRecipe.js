@@ -17,27 +17,27 @@ function AddRecipe({ recipe }) {
   const uuid = id ? id : uuidv4();
   const editDate = id ? now : '';
   const [postDate, setPostDate] = useState('');
-  const [title, setTitle] = useState(recipe ? recipe.title : '');
-  const [description, setDescription] = useState(recipe ? recipe.description : '');
-  const [servings, setServings] = useState(recipe ? recipe.servings : '');
-  const [ingredients, setIngredients] = useState(recipe ? recipe.ingredients : []);
-  const [prepTime, setPrepTime] = useState(recipe ? recipe.prepTime : '');
-  const [cookTime, setCookTime] = useState(recipe ? recipe.cookTime : '');
-  const [directions, setDirections] = useState(recipe ? recipe.directions : []);
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [servings, setServings] = useState('');
+  const [ingredients, setIngredients] = useState([]);
+  const [prepTime, setPrepTime] = useState('');
+  const [cookTime, setCookTime] = useState('');
+  const [directions, setDirections] = useState([]);
 
   useEffect(() => {
     if (!id) return;
     axiosAPI
       .get(`/recipes/${id}`)
       .then((res) => {
-        setPostDate(res.data.postDate);
-        setTitle(res.data.title);
-        setDescription(res.data.description);
-        setServings(res.data.servings);
-        setIngredients(res.data.ingredients);
-        setPrepTime(res.data.prepTime);
-        setCookTime(res.data.cookTime);
-        setDirections(res.data.directions);
+        setPostDate(res.data.postDate || '');
+        setTitle(res.data.title || '');
+        setDescription(res.data.description || '');
+        setServings(res.data.servings || '');
+        setIngredients(res.data.ingredients || []);
+        setPrepTime(res.data.prepTime || '');
+        setCookTime(res.data.cookTime || '');
+        setDirections(res.data.directions || '');
       })
       .catch((err) => {
         console.log(err);
